@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "jsx": "react",
+    "baseUrl": ".",
+    "paths": {
+      "@/ui/*": ["libs/core/ui/src/ui/*"],
+      "@/libs/*": ["libs/*"]
+    }
+  }
+}
