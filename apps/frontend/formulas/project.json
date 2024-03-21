@@ -1,0 +1,8 @@
+{
+  "name": "formulas",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/frontend/formulas",
+  "projectType": "application",
+  "targets": {},
+  "tags": []
+}
