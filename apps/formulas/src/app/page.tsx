@@ -1,4 +1,4 @@
-import { Button } from '@/ui/button';
+import MathKeyboard from '@/formulas-lib/math-keyboard';
 
 export default function Index() {
   /*
@@ -7,8 +7,8 @@ export default function Index() {
    * Note: The corresponding styles are in the ./index.css file.
    */
   return (
-    <h1 className="text-center p-3">
-      <Button>Init shadcn lib</Button>
-    </h1>
+    <div className="container text-center">
+      <MathKeyboard />
+    </div>
   );
 }
