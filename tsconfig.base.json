@@ -15,9 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@./components": ["libs/formulas/components/src/index.ts"],
-      "@./components/server": ["libs/formulas/components/src/server.ts"],
-      "@/formulas-lib/*": ["libs/formulas/components/src/*"],
+      "@/formulas-lib/*": ["libs/formulas/core/ui/src/*"],
       "@/libs/*": ["libs/*"],
       "@/ui/*": ["libs/core/ui/src/ui/*"]
     }

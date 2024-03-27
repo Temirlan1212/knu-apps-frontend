@@ -1,0 +1,8 @@
+{
+  "name": "blog",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/formulas/blog/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {}
+}
