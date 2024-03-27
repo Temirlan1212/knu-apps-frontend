@@ -1,4 +1,5 @@
 import './global.css';
+import { Header } from '@/libs/formulas/layouts/src';
 
 export const metadata = {
   title: 'Welcome to apps/frontend/formulas',
@@ -12,7 +13,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <Header />
+        {children}
+      </body>
     </html>
   );
 }

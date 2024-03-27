@@ -1,0 +1,8 @@
+{
+  "name": "layouts",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/formulas/layouts/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {}
+}

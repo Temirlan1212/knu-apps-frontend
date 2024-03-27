@@ -20,20 +20,18 @@ type VeiwType = {
   onChange: (editor: typeof BlockNoteCustomSchema.BlockNoteEditor) => void;
 };
 
-export interface BlockNoteEditorViewOptions {
-  options?: Partial<
-    typeof BlockNoteCustomSchema.BlockNoteEditor.blockImplementations
-  >;
-  viewProps?: Partial<VeiwType>;
+export interface BlockNoteEditorViewOptions extends Partial<VeiwType> {
+  initialContent?: (typeof BlockNoteCustomSchema.PartialBlock)[];
 }
 
 export default function BlockNoteView({
-  options,
-  viewProps,
+  initialContent = [{}],
+  ...componentProps
 }: BlockNoteEditorViewOptions) {
   // Creates a new editor instance.
   const editor = useCreateBlockNote({
     schema: BlockNoteCustomSchema,
+    initialContent: initialContent,
   });
 
   // Renders the editor instance using a React component.
@@ -43,9 +41,9 @@ export default function BlockNoteView({
       editor={editor}
       slashMenu={false}
       sideMenu={false}
-      {...viewProps}
+      {...componentProps}
       onChange={() => {
-        viewProps?.onChange && viewProps.onChange(editor);
+        componentProps?.onChange && componentProps.onChange(editor);
       }}
     >
       <SideMenuController
