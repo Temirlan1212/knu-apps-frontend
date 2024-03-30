@@ -10,6 +10,7 @@ export interface UserData extends User {
   createdAt: string;
   updatedAt: string;
   id: number;
+  role: string;
 }
 
 export type UserCookieData =

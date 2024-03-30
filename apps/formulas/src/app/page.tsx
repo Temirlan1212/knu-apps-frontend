@@ -1,3 +1,6 @@
+import { SectionBuilderWrapper } from '@/libs/formulas/ui/src/section-builder-wrapper';
+import { Button } from '@/ui/button';
+
 export default async function Index() {
   /*
    * Replace the elements below with your own.
@@ -7,15 +10,21 @@ export default async function Index() {
 
   return (
     <div className="container">
-      <div>
-        <h2>Формулы</h2>
-        <div>dsfasdf</div>
-      </div>
+      <SectionBuilderWrapper
+        title="Формулы"
+        slots={{
+          titleRightBlock: <Button variant="ghost">Создать</Button>,
+        }}
+      >
+        ddafs
+      </SectionBuilderWrapper>
 
-      <div>
-        <h2>Темы</h2>
-        <div>dsfasdf</div>
-      </div>
+      <SectionBuilderWrapper
+        title="Темы"
+        slots={{
+          titleRightBlock: <Button variant="ghost">Создать</Button>,
+        }}
+      />
     </div>
   );
 }
