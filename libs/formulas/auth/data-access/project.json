@@ -1,0 +1,8 @@
+{
+  "name": "data-access",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/formulas/auth/data-access/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {}
+}

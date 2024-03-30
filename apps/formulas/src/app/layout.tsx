@@ -1,5 +1,6 @@
 import './global.css';
 import { Header } from '@/libs/formulas/layouts/src';
+import { Toaster } from '@/ui/toaster';
 
 export const metadata = {
   title: 'Welcome to apps/frontend/formulas',
@@ -15,7 +16,8 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <Header />
-        {children}
+        <div className="py-3">{children}</div>
+        <Toaster />
       </body>
     </html>
   );

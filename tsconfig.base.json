@@ -15,8 +15,10 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@/http": ["libs/core/http/src/index.ts"],
       "@/formulas-lib/*": ["libs/formulas/core/ui/src/*"],
       "@/libs/*": ["libs/*"],
+      "@/apps/*": ["apps/*"],
       "@/ui/*": ["libs/core/ui/src/ui/*"]
     }
   },

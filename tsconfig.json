@@ -3,9 +3,11 @@
     "jsx": "react",
     "baseUrl": ".",
     "paths": {
+      "@/http": ["libs/core/http/src/index.ts"],
       "@/ui/*": ["libs/core/ui/src/ui/*"],
       "@/formulas-lib/*": ["libs/formulas/core/ui/src/*"],
-      "@/libs/*": ["libs/*"]
+      "@/libs/*": ["libs/*"],
+      "@/apps/*": ["apps/*"]
     }
   }
 }
