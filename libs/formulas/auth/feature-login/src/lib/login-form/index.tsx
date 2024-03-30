@@ -22,10 +22,7 @@ import {
 } from '@/ui/form';
 import { useState } from 'react';
 import { IUserFormSchema, userFormSchema } from './form.schema';
-import {
-  authConroller,
-  loginWithCredentials,
-} from '@/libs/formulas/auth/data-access/src';
+import { authConroller } from '@/libs/formulas/auth/data-access/src';
 import { toast } from '@/ui/use-toast';
 import { useRouter } from 'next/navigation';
 
@@ -44,7 +41,9 @@ export function LoginForm() {
 
   async function onSubmit(data: IUserFormSchema) {
     setLoading(true);
-    const { ok, message, result } = await loginWithCredentials(data);
+    const { ok, message, result } = await authConroller.loginWithCredentials(
+      data
+    );
     if (ok) {
       toast({
         variant: 'success',
@@ -52,7 +51,7 @@ export function LoginForm() {
         description: 'Вы успешно авторизовались!',
       });
 
-      authConroller().loginWithCookie(result, router);
+      authConroller.loginWithCookie(result, router);
     } else {
       if (Array.isArray(message)) {
         message.map(({ property, message }) => {

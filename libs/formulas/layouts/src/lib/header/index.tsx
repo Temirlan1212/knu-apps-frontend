@@ -6,7 +6,7 @@ import { authConroller } from '@/libs/formulas/auth/data-access/src';
 import { Logout } from './logout';
 
 export async function Header() {
-  const { getServerSession } = authConroller();
+  const { getServerSession } = authConroller;
   const { status } = getServerSession();
 
   return (

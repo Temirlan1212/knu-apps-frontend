@@ -1,8 +1,9 @@
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 import { cookieUserServerService } from '../services/cookie-user-server.service';
 import { cookieUserService } from '../services/cookie-user.service';
-import { UserData } from '@/libs/formulas/utils/types';
+import { UserCredentials, UserData } from '@/libs/formulas/utils/types';
 import { verifyService } from '../services/verify.service';
+import { loginService } from '../services/login.service';
 
 export const authConroller = () => {
   return {
@@ -13,6 +14,9 @@ export const authConroller = () => {
       cookieUserService().setItem(data);
       router.push('/');
       router.refresh();
+    },
+    async loginWithCredentials(data: UserCredentials) {
+      return await loginService().loginWithCredentials(data);
     },
     logout(router: AppRouterInstance) {
       cookieUserService().removeItem();

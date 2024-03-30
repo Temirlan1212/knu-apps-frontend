@@ -1,11 +1,15 @@
 export interface User {
   username: string;
-  id: number;
+}
+
+export interface UserCredentials extends User {
+  password: string;
 }
 
 export interface UserData extends User {
   createdAt: string;
   updatedAt: string;
+  id: number;
 }
 
 export type UserCookieData =

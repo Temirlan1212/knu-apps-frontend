@@ -5,7 +5,7 @@ import { authConroller } from '@/libs/formulas/auth/data-access/src';
 import { useRouter } from 'next/navigation';
 
 export async function Logout() {
-  const { logout } = authConroller();
+  const { logout } = authConroller;
   const router = useRouter();
   const handleLogout = async () => logout(router);
   return (
