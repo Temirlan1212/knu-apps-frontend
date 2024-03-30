@@ -51,6 +51,7 @@ export function LoginForm() {
         title: 'Пользователь найден',
         description: 'Вы успешно авторизовались!',
       });
+
       authConroller().loginWithCookie(result, router);
     } else {
       if (Array.isArray(message)) {

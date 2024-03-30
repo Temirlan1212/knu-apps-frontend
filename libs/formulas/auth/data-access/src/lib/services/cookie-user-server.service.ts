@@ -5,7 +5,7 @@ import { UserCookieData, UserData } from '@/libs/formulas/utils/types';
 
 export const cookieUserServerService = () => {
   return {
-    getItem(): UserCookieData {
+    getItem: function (): UserCookieData {
       const user: RequestCookie | undefined = cookies().get('user');
       if (user?.value) {
         const { token, data }: { token: string; data: UserData } = JSON.parse(
@@ -19,6 +19,14 @@ export const cookieUserServerService = () => {
         data: undefined,
         token: undefined,
       };
+    },
+
+    removeItem: function () {
+      cookies().set({
+        name: 'user',
+        value: '',
+        maxAge: -1,
+      });
     },
   };
 };

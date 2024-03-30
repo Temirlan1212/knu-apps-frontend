@@ -13,23 +13,6 @@ export const cookieService = {
     document.cookie = `${cookieName}=${cookieValue};expires=${expires};path=/;SameSite=Strict;`;
   },
 
-  getCookie({ cookieName }: CookieOptions): string | null {
-    let name = `${cookieName}=`;
-    let cookieArray = document.cookie.split(';'); // Split the document's cookie string into an array.
-    for (let i = 0; i < cookieArray.length; i++) {
-      // For every cookie in the array.
-      let cookie = cookieArray[i];
-      while (cookie.charAt(0) === ' ') {
-        // Remove any space from the start of the cookie name.
-        cookie = cookie.substring(1);
-      }
-      if (cookie.indexOf(name) === 0) {
-        return cookie.substring(name.length, cookie.length); // Return the value of the cookie.
-      }
-    }
-    return null; // Return false if there were no matching cookies.
-  },
-
   checkCookie({ cookieName }: CookieOptions): boolean {
     return !!cookieName && document.cookie.includes(`${cookieName}=`); // Return true if the requested cookie name exists in the document.
   },
