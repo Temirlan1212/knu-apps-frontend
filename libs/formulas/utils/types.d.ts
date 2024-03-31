@@ -1,3 +1,4 @@
+export type ServerTimestampt = { createdAt: string; updatedAt: string };
 export type IRoles = 'CLIENT' | 'ADMIN';
 
 export interface User {
@@ -8,9 +9,7 @@ export interface UserCredentials extends User {
   password: string;
 }
 
-export interface UserData extends User {
-  createdAt: string;
-  updatedAt: string;
+export interface UserData extends User, ServerTimestampt {
   id: number;
   role: IRoles;
 }
@@ -41,3 +40,25 @@ export interface IChildRouteGroup extends IChildRoute {
 }
 
 export type IRouteProps = IChildRouteDefault | IChildRouteGroup;
+
+export type Category = {
+  label: string;
+  id: string;
+} & ServerTimestampt;
+
+export interface PaginationResponse<T> {
+  data: T[];
+  meta: {
+    total: number;
+    lastPage: number;
+    currentPage: number;
+    perPage: number;
+    prev: number | null;
+    next: number | null;
+  };
+}
+export interface PaginationQuery<T extends number> {
+  perPage: T;
+  page: T;
+  label: string;
+}

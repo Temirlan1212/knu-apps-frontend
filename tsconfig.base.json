@@ -15,10 +15,12 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@/http": ["libs/core/http/src/index.ts"],
-      "@/formulas-lib/*": ["libs/formulas/core/ui/src/*"],
-      "@/libs/*": ["libs/*"],
+      "@./category": ["libs/formulas/category/src/index.ts"],
+      "@./category/server": ["libs/formulas/category/src/server.ts"],
       "@/apps/*": ["apps/*"],
+      "@/formulas-lib/*": ["libs/formulas/core/ui/src/*"],
+      "@/http": ["libs/core/http/src/index.ts"],
+      "@/libs/*": ["libs/*"],
       "@/ui/*": ["libs/core/ui/src/ui/*"]
     }
   },

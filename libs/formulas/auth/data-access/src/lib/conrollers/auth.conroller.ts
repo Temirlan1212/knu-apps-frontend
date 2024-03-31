@@ -10,6 +10,9 @@ export const authConroller = () => {
     getServerSession() {
       return cookieUserServerService().getItem();
     },
+    getClientSession() {
+      return cookieUserService().getItem();
+    },
     loginWithCookie(data: UserData, router: AppRouterInstance) {
       cookieUserService().setItem(data);
       router.push('/');

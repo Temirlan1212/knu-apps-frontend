@@ -32,8 +32,8 @@ export function LoginForm() {
   const form = useForm<IUserFormSchema>({
     resolver: zodResolver(userFormSchema),
     defaultValues: {
-      username: 'truwer',
-      password: 'truwer',
+      username: '',
+      password: '',
     },
   });
 
@@ -124,7 +124,7 @@ export function LoginForm() {
               </Button>
             </CardFooter>
 
-            <p className="px-8 text-center text-sm text-muted-foreground">
+            {/* <p className="px-8 text-center text-sm text-muted-foreground">
               У вас нету учетной записи?{' '}
               <Link
                 href="/sign-up"
@@ -132,7 +132,7 @@ export function LoginForm() {
               >
                 Создать
               </Link>
-            </p>
+            </p> */}
           </Card>
         </form>
       </Form>

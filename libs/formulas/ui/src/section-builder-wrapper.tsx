@@ -15,7 +15,7 @@ export function SectionBuilderWrapper({
   children,
 }: PropsWithChildren<SectionBuilderWrapperProps>) {
   return (
-    <div>
+    <div className="flex flex-col gap-2">
       <div className="flex gap-3 justify-between items-center">
         <h2 className="text-[30px]">{title}</h2>
         {slots?.titleRightBlock && slots.titleRightBlock}

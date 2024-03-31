@@ -14,6 +14,7 @@ import { Button } from '@/ui/button';
 import { UserData } from '@/libs/formulas/utils/types';
 import { Logout } from './logout';
 import { LogOut } from 'lucide-react';
+import Link from 'next/link';
 
 export function UserNav({ username, role }: UserData) {
   return (
@@ -42,12 +43,22 @@ export function UserNav({ username, role }: UserData) {
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem>
+          {/* <DropdownMenuItem>
             Профиль
             <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
           </DropdownMenuItem>
+          <DropdownMenuSeparator /> */}
+
+          {role === 'ADMIN' && (
+            <>
+              <Link href={'/dashboard'}>
+                <DropdownMenuItem>Админ панель</DropdownMenuItem>
+              </Link>
+              <DropdownMenuSeparator />
+            </>
+          )}
         </DropdownMenuGroup>
-        <DropdownMenuSeparator />
+
         <Logout>
           <DropdownMenuLabel
             className={

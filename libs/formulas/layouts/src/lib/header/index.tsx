@@ -15,7 +15,7 @@ export async function Header() {
         <LogoComponent />
         <div className="flex gap-3">
           {status === 'unauthenticated' && (
-            <Link href="login">
+            <Link href="/login">
               <Button variant="ghost">
                 <ArrowRightCircle />
               </Button>

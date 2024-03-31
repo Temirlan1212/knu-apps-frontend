@@ -2,7 +2,7 @@
 const API_URL = process.env.API_URL;
 const VERCEL_COOKIE = process.env.VERCEL_COOKIE;
 
-type ApiResponse<T> = {
+export type ApiResponse<T> = {
   ok: boolean;
   statusCode: string;
   path?: string;
