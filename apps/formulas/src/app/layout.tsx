@@ -20,7 +20,7 @@ export default async function RootLayout({
       <body>
         <AuthGuard logout={!ok}>
           <Header />
-          <div className="py-3">{children}</div>
+          {children}
           <Toaster />
         </AuthGuard>
       </body>
