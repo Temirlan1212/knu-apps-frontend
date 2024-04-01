@@ -75,7 +75,7 @@ export function DataTable({
   return (
     <div className="w-full">
       <div className="flex items-center pb-4 justify-between gap-2 flex-wrap">
-        <div className="max-w-full w-full md:max-w-sm">
+        <div className="max-w-full w-full md:w-[fit-content]">
           {slots?.headerLeftBlock && slots?.headerLeftBlock(table)}
         </div>
         <div className="flex items-center gap-2 w-full md:w-[fit-content]">

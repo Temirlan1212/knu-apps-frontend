@@ -3,6 +3,7 @@ import { forwardRef, useEffect, useRef, useState } from 'react';
 import MathInput from 'react-math-keyboard';
 import { CustomBlockSpecTypesProps } from './blocknote-view/types';
 import { twMerge } from 'tailwind-merge';
+import './math-keyboard.css';
 
 interface MathKeyboardProps extends Partial<CustomBlockSpecTypesProps> {
   initialLatex?: string;

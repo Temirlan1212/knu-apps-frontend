@@ -1,44 +1,45 @@
 import {
-  Category,
-  CategoryPaginationQuery,
+  Formula,
+  FormulaPaginationQuery,
+  PaginationQuery,
   PaginationResponse,
 } from '@/libs/formulas/utils/types';
 import { create } from 'zustand';
-import { categoryConroller } from '..';
+import { formulaConroller } from '..';
 import { ValueOf } from 'next/dist/shared/lib/constants';
 
-interface ICategoryStateProps {
-  categories: Category[];
+interface IFormulaStateProps {
+  formula: Formula[];
   loading: boolean;
-  paginationMeta: PaginationResponse<Category[]>['meta'];
-  label: string;
-  query: CategoryPaginationQuery;
-  fetchCategories: ({
+  paginationMeta: PaginationResponse<Formula[]>['meta'];
+  fetchFormula: ({
     page,
-    label,
-  }: Partial<CategoryPaginationQuery>) => Promise<any>;
+    title,
+  }: Partial<FormulaPaginationQuery>) => Promise<any>;
+  query: FormulaPaginationQuery;
   nextPage: () => void;
   previousPage: () => void;
-  deleteCategory: (id: Category['id']) => void;
+  deleteFormula: (id: Formula['id']) => void;
   onDeleteSuccess: () => void;
   updatePaginationMeta: (
-    key: keyof PaginationResponse<Category[]>['meta'],
-    value: ValueOf<PaginationResponse<Category[]>['meta']>
+    key: keyof PaginationResponse<Formula[]>['meta'],
+    value: ValueOf<PaginationResponse<Formula[]>['meta']>
   ) => void;
   updateQuery: (
-    key: keyof CategoryPaginationQuery,
-    value: ValueOf<CategoryPaginationQuery>
+    key: keyof FormulaPaginationQuery,
+    value: ValueOf<FormulaPaginationQuery>
   ) => void;
 }
 
 const PER_PAGE = 10;
 
-export const useCategoryState = create<ICategoryStateProps>((set, get) => ({
-  categories: [],
+export const useFormulaState = create<IFormulaStateProps>((set, get) => ({
+  formula: [],
   loading: false,
-  label: '',
   query: {
-    label: '',
+    title: '',
+    description: '',
+    latex: '',
     perPage: PER_PAGE,
     page: 0,
   },
@@ -57,20 +58,24 @@ export const useCategoryState = create<ICategoryStateProps>((set, get) => ({
   updateQuery: (key, value) => {
     set({ query: { ...get().query, [key]: value } });
   },
-  fetchCategories: async ({ page, label, perPage }) => {
+  fetchFormula: async ({ page, title, description, latex, perPage }) => {
     set({ loading: true });
     if (page) get().updateQuery('page', page);
     if (perPage) get().updateQuery('perPage', perPage);
-    get().updateQuery('label', label ? label : '');
+    get().updateQuery('latex', latex ? latex : '');
+    get().updateQuery('description', description ? description : '');
+    get().updateQuery('title', title ? title : '');
 
-    const res = await categoryConroller.findAll({
+    const res = await formulaConroller.findAll({
       page: get().query.page,
       perPage: get().query.perPage,
-      label: get().query.label,
+      title: get().query.title,
+      description: get().query.description,
+      latex: get().query.latex,
     });
 
     if (res.ok) {
-      set({ categories: res.result.data });
+      set({ formula: res.result.data });
       set({ paginationMeta: res.result.meta });
     }
     set({ loading: false });
@@ -78,48 +83,48 @@ export const useCategoryState = create<ICategoryStateProps>((set, get) => ({
   nextPage: async () => {
     const nextPage = get().paginationMeta.next;
     if (nextPage == null) return;
-    get().fetchCategories({ page: nextPage });
+    get().fetchFormula({ page: nextPage });
   },
   previousPage: async () => {
     const prevPage = get().paginationMeta.prev;
     if (prevPage == null) return;
-    get().fetchCategories({ page: prevPage });
+    get().fetchFormula({ page: prevPage });
   },
   onDeleteSuccess: () => {
     const { total, currentPage } = get().paginationMeta;
     const maxPage = Math.round((total - 1) / PER_PAGE);
     if (currentPage > maxPage && currentPage !== 1) get().previousPage();
-    else get().fetchCategories({ page: get().paginationMeta.currentPage });
+    else get().fetchFormula({ page: get().paginationMeta.currentPage });
   },
-  deleteCategory: async (id) => {
-    const res = await categoryConroller.delete(id);
+  deleteFormula: async (id: any) => {
+    const res = await formulaConroller.delete(id);
     if (res.ok) get().onDeleteSuccess();
     return res;
   },
 }));
 
-interface ICategoryCuStateProps {
+interface IFormulaCuStateProps {
   variant: 'create' | 'update';
-  category: Category | null;
+  formula: Formula | null;
   dialog: boolean;
   setDialog: (value: boolean) => void;
-  categoryUpdateDialogInit: (category: Category) => void;
-  categoryCreateDialogInit: () => void;
+  formulaUpdateDialogInit: (formula: Formula) => void;
+  formulaCreateDialogInit: () => void;
 }
 
-export const useCategoryCuState = create<ICategoryCuStateProps>((set, get) => ({
+export const useFormulaCuState = create<IFormulaCuStateProps>((set, get) => ({
   variant: 'create',
-  category: null,
+  formula: null,
   dialog: false,
   setDialog: (value) => set({ dialog: value }),
-  categoryUpdateDialogInit: (category) => {
+  formulaUpdateDialogInit: (formula) => {
     set({ variant: 'update' });
-    set({ category });
+    set({ formula });
     get().setDialog(true);
   },
-  categoryCreateDialogInit: () => {
+  formulaCreateDialogInit: () => {
     set({ variant: 'create' });
-    set({ category: null });
+    set({ formula: null });
     get().setDialog(true);
   },
 }));

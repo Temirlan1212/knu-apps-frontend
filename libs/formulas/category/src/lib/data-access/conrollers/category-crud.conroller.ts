@@ -1,4 +1,4 @@
-import { Category, PaginationQuery } from '@/libs/formulas/utils/types';
+import { Category, CategoryPaginationQuery } from '@/libs/formulas/utils/types';
 import { categoryCrudService } from '../services/category-crud.service';
 
 export const categoryConroller = () => {
@@ -9,7 +9,7 @@ export const categoryConroller = () => {
     update(id: Category['id'], label: Category['label']) {
       return categoryCrudService().update(id, label);
     },
-    findAll(data: PaginationQuery<number>) {
+    findAll(data: CategoryPaginationQuery) {
       return categoryCrudService().findAll(data);
     },
     findOne(id: Category['id']) {

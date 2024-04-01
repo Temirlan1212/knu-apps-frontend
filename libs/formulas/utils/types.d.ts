@@ -46,6 +46,13 @@ export type Category = {
   id: string;
 } & ServerTimestampt;
 
+export type Formula = {
+  title: string;
+  latex: string;
+  description: string;
+  id: string;
+} & ServerTimestampt;
+
 export interface PaginationResponse<T> {
   data: T[];
   meta: {
@@ -60,5 +67,14 @@ export interface PaginationResponse<T> {
 export interface PaginationQuery<T extends number> {
   perPage: T;
   page: T;
+}
+
+export interface CategoryPaginationQuery extends PaginationQuery<number> {
   label: string;
+}
+
+export interface FormulaPaginationQuery extends PaginationQuery<number> {
+  title: string;
+  description: string;
+  latex: string;
 }
