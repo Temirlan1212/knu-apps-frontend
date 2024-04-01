@@ -30,6 +30,8 @@ import {
 } from '../../data-access';
 import { ApiResponse } from '@/http';
 import MathKeyboard from '@/libs/formulas/ui/src/math-keyboard';
+import { CategoryListFormWithDialog } from '@/libs/formulas/category/src';
+import { primitiveArrToObjValueAsKey } from '@/libs/formulas/utils/helpers';
 
 const variantTextContentSchema = {
   title: { update: 'Редактировать', create: 'Создать' },
@@ -63,15 +65,39 @@ export function FormulaCuForm({}: FormulaCuFormProps) {
     defaultValues: {
       title: '',
       latex: '',
+      categories: {},
     },
-    values: formulaValueState ? formulaValueState : undefined,
+    values: {
+      ...formulaValueState,
+      categories: primitiveArrToObjValueAsKey(
+        formulaValueState.categoryIds,
+        true
+      ),
+    },
   });
 
-  async function onSubmit({ latex, title, description }: IFormulaCuSchema) {
+  async function onSubmit({
+    latex,
+    title,
+    description,
+    categories,
+  }: IFormulaCuSchema) {
+    const isValidFormState = await form.trigger();
+    if (!isValidFormState) return;
+    const categoryIds = Object.keys(categories || {});
+    if (categoryIds.length < 1) {
+      toast({ variant: 'destructive', title: 'Выберите категорию' });
+      return;
+    }
     setLoading(true);
 
     if (variant === 'create') {
-      let res = await formulaConroller['create']({ latex, title, description });
+      let res = await formulaConroller['create']({
+        latex,
+        title,
+        description,
+        categoryIds,
+      });
       reponseHandler(res);
     }
 
@@ -80,6 +106,7 @@ export function FormulaCuForm({}: FormulaCuFormProps) {
         latex,
         title,
         description,
+        categoryIds,
       });
       reponseHandler(res);
     }
@@ -115,6 +142,17 @@ export function FormulaCuForm({}: FormulaCuFormProps) {
               <CardDescription>{description[variant]}</CardDescription>
             </CardHeader>
             <CardContent className="grid gap-4 px-[10px]">
+              <div className="flex justify-end">
+                <CategoryListFormWithDialog
+                  formFieldProps={{
+                    name: 'categories',
+                    control: form.control,
+                  }}
+                >
+                  Список категорий
+                </CategoryListFormWithDialog>
+              </div>
+
               <div className="grid gap-2">
                 <FormField
                   control={form.control}

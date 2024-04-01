@@ -6,8 +6,10 @@ import {
 import { create } from 'zustand';
 import { categoryConroller } from '..';
 import { ValueOf } from 'next/dist/shared/lib/constants';
+import { RowSelectionState } from '@tanstack/react-table';
 
 interface ICategoryStateProps {
+  selectedCategoriesInIds: RowSelectionState;
   categories: Category[];
   loading: boolean;
   paginationMeta: PaginationResponse<Category[]>['meta'];
@@ -29,11 +31,19 @@ interface ICategoryStateProps {
     key: keyof CategoryPaginationQuery,
     value: ValueOf<CategoryPaginationQuery>
   ) => void;
+  set: (
+    partial:
+      | ICategoryStateProps
+      | Partial<ICategoryStateProps>
+      | ((state: ICategoryStateProps) => ICategoryStateProps | Partial<any>),
+    replace?: boolean | undefined
+  ) => void;
 }
 
 const PER_PAGE = 10;
 
 export const useCategoryState = create<ICategoryStateProps>((set, get) => ({
+  selectedCategoriesInIds: {},
   categories: [],
   loading: false,
   label: '',
@@ -50,6 +60,7 @@ export const useCategoryState = create<ICategoryStateProps>((set, get) => ({
     prev: null,
     next: null,
   },
+  set: (partial, replace) => set(partial, replace),
   updatePaginationMeta: (key, value) => {
     if (!value) return;
     set({ paginationMeta: { ...get().paginationMeta, [key]: value } });

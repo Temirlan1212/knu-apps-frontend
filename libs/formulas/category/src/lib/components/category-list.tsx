@@ -8,16 +8,22 @@ import {
   RowConrolMenu,
   DebounceSearch,
   AddAction,
+  IDataTableProps,
 } from '@/ui/data-table';
 import { SimplePagination } from '@/ui/simple-pagintation';
 import { categoryColumns } from './category-data-table.data';
 import { ActionCell } from './category-data-table-actions';
 import { CategoryCuForm } from './category-cu/category-cu-form';
 
-export interface CategoryListProps {}
+export interface CategoryListProps {
+  props?: {
+    dataTable?: Partial<IDataTableProps>;
+  };
+}
 
-export function CategoryList(props: CategoryListProps) {
+export function CategoryList({ props }: CategoryListProps) {
   const {
+    set,
     fetchCategories,
     nextPage,
     previousPage,
@@ -25,6 +31,7 @@ export function CategoryList(props: CategoryListProps) {
     categories,
     paginationMeta,
     loading,
+    selectedCategoriesInIds,
   } = useCategoryState();
 
   const categoryCreateDialogInit =
@@ -32,8 +39,12 @@ export function CategoryList(props: CategoryListProps) {
   const categoryUpdateDialogInit =
     useCategoryCuState().categoryUpdateDialogInit;
 
+  const onMount = async () => {
+    await fetchCategories({ page: 1 });
+  };
+
   useEffect(() => {
-    fetchCategories({ page: 1 });
+    onMount();
   }, []);
 
   return (
@@ -45,6 +56,11 @@ export function CategoryList(props: CategoryListProps) {
         }}
       >
         <DataTable
+          onRowSelectionChange={(selectedRows) => {
+            set({ selectedCategoriesInIds: selectedRows });
+          }}
+          rowSelection={selectedCategoriesInIds}
+          {...(props?.dataTable || {})}
           data={categories}
           columns={[
             ...categoryColumns,
@@ -84,8 +100,11 @@ export function CategoryList(props: CategoryListProps) {
           }}
           slots={{
             leftTitle: (
-              <div>
-                {paginationMeta.currentPage} из {paginationMeta.total}
+              <div className="flex gap-2">
+                <p>
+                  {paginationMeta.currentPage} из {paginationMeta.total}
+                </p>
+                <p>Выбрано: {Object.values(selectedCategoriesInIds).length}</p>
               </div>
             ),
           }}

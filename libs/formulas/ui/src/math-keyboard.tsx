@@ -33,7 +33,7 @@ const MathKeyboard = forwardRef<HTMLDivElement, MathKeyboardProps>(
       if (firstMathfieldRef.current != null && !!initialLatex) {
         setMathfieldRefLatex(initialLatex);
       }
-    }, [initialLatex]);
+    }, []);
 
     useEffect(() => {
       if (firstMathfieldRef.current != null && !initialLatex)

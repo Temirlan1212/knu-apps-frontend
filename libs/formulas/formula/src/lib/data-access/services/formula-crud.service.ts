@@ -35,20 +35,20 @@ export const formulaCrudService = () => {
         }
       );
     },
-    async create({ latex, title, description }: Partial<Formula>) {
+    async create({ latex, title, description, categoryIds }: Partial<Formula>) {
       return await apifetch<Partial<Formula>>('formula', {
         method: 'POST',
-        body: JSON.stringify({ latex, title, description }),
+        body: JSON.stringify({ latex, title, description, categoryIds }),
         headers,
       });
     },
     async update(
       id: Formula['id'],
-      { latex, title, description }: Partial<Formula>
+      { latex, title, description, categoryIds }: Partial<Formula>
     ) {
       return await apifetch<{ id: Formula['id'] }>('formula' + '/' + id, {
         method: 'PATCH',
-        body: JSON.stringify({ latex, title, description }),
+        body: JSON.stringify({ latex, title, description, categoryIds }),
         headers,
       });
     },

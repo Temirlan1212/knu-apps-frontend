@@ -2,6 +2,7 @@
 import { PropsWithChildren } from 'react';
 import { useFormulaCuState } from '../../data-access';
 import { Sheet, SheetContent } from '@/ui/sheet';
+import { useCategoryState } from '@/libs/formulas/category/src/lib/data-access';
 
 export interface FormulaCuDialogProps {
   slots?: { trigger: React.ReactNode };

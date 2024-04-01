@@ -1,5 +1,6 @@
 export type ServerTimestampt = { createdAt: string; updatedAt: string };
 export type IRoles = 'CLIENT' | 'ADMIN';
+export type PrimitiveJsTypes = string | number | boolean | bigint | symbol;
 
 export interface User {
   username: string;
@@ -51,7 +52,8 @@ export type Formula = {
   latex: string;
   description: string;
   id: string;
-} & ServerTimestampt;
+  categoryIds: string[];
+} & Partial<ServerTimestampt>;
 
 export interface PaginationResponse<T> {
   data: T[];

@@ -41,6 +41,7 @@ export const formulaCuSchema = z.object({
       `Строка должна содержать не более ${MinMax.descriptionMax} символов`
     )
     .optional(),
+  categories: z.record(z.string(), z.boolean()).optional(),
 });
 
 export type IFormulaCuSchema = z.infer<typeof formulaCuSchema>;

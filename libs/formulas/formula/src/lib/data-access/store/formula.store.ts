@@ -105,16 +105,24 @@ export const useFormulaState = create<IFormulaStateProps>((set, get) => ({
 
 interface IFormulaCuStateProps {
   variant: 'create' | 'update';
-  formula: Formula | null;
+  formula: Formula;
   dialog: boolean;
   setDialog: (value: boolean) => void;
   formulaUpdateDialogInit: (formula: Formula) => void;
   formulaCreateDialogInit: () => void;
 }
 
+const defaultFormula = {
+  title: '',
+  latex: '',
+  description: '',
+  id: '',
+  categoryIds: [],
+};
+
 export const useFormulaCuState = create<IFormulaCuStateProps>((set, get) => ({
   variant: 'create',
-  formula: null,
+  formula: defaultFormula,
   dialog: false,
   setDialog: (value) => set({ dialog: value }),
   formulaUpdateDialogInit: (formula) => {
@@ -124,7 +132,7 @@ export const useFormulaCuState = create<IFormulaCuStateProps>((set, get) => ({
   },
   formulaCreateDialogInit: () => {
     set({ variant: 'create' });
-    set({ formula: null });
+    set({ formula: defaultFormula });
     get().setDialog(true);
   },
 }));
