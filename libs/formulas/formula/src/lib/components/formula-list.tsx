@@ -23,6 +23,7 @@ export function FormulaList(props: FormulaListProps) {
     previousPage,
     deleteFormula,
     formula,
+    query,
     paginationMeta,
     loading,
   } = useFormulaState();
@@ -65,7 +66,9 @@ export function FormulaList(props: FormulaListProps) {
                   <p>Поиск по названию</p>
                   <DebounceSearch
                     debounceDelay={500}
-                    onDebounceChange={(title) => fetchFormula({ title })}
+                    onDebounceChange={(title) =>
+                      fetchFormula({ ...query, title })
+                    }
                   />
                 </div>
                 <div className="flex flex-col gap-2 grow">
@@ -73,7 +76,7 @@ export function FormulaList(props: FormulaListProps) {
                   <DebounceSearch
                     debounceDelay={500}
                     onDebounceChange={(description) =>
-                      fetchFormula({ description })
+                      fetchFormula({ ...query, description })
                     }
                   />
                 </div>
@@ -81,7 +84,9 @@ export function FormulaList(props: FormulaListProps) {
                   <p>Поиск по формуле</p>
                   <DebounceSearch
                     debounceDelay={500}
-                    onDebounceChange={(latex) => fetchFormula({ latex })}
+                    onDebounceChange={(latex) =>
+                      fetchFormula({ ...query, latex })
+                    }
                   />
                 </div>
               </div>
