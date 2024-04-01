@@ -4,6 +4,8 @@ import { authConroller as authConrollerLocal } from './lib/conrollers/auth.conro
 const authConroller = authConrollerLocal();
 
 export * from './lib/services/check-auth';
-export * from './lib/services/admin.guard';
+export * from './lib/services/admin-redirect.guard';
+export * from './lib/services/admin-server-wrapper.guard';
+export * from './lib/services/admin-client-wrapper.guard';
 export * from './lib/services/auth.guard';
 export { authConroller };

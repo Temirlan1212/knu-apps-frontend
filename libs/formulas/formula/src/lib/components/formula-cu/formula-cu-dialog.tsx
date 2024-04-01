@@ -16,7 +16,7 @@ export function FormulaCuDialog({
 
   return (
     <Sheet modal={false} open={dialog} onOpenChange={setDialog}>
-      <SheetContent className="!w-full !max-w-full sm:max-w-full">
+      <SheetContent className="sm:!w-[75%] !w-full !max-w-full sm:max-w-full">
         {children}
       </SheetContent>
     </Sheet>

@@ -1,5 +1,7 @@
+import { FormulaCarousel } from '@./formula';
 import { SectionBuilderWrapper } from '@/libs/formulas/ui/src/section-builder-wrapper';
 import { Button } from '@/ui/button';
+import Link from 'next/link';
 
 export default async function Index() {
   /*
@@ -9,14 +11,18 @@ export default async function Index() {
    */
 
   return (
-    <div className="container">
+    <div className="container py-5">
       <SectionBuilderWrapper
         title="Формулы"
         slots={{
-          titleRightBlock: <Button variant="ghost">Создать</Button>,
+          titleRightBlock: (
+            <Link href="/formula">
+              <Button variant="ghost">Все</Button>
+            </Link>
+          ),
         }}
       >
-        ddafs
+        <FormulaCarousel />
       </SectionBuilderWrapper>
 
       <SectionBuilderWrapper

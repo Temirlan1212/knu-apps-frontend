@@ -8,11 +8,17 @@ import './math-keyboard.css';
 interface MathKeyboardProps extends Partial<CustomBlockSpecTypesProps> {
   initialLatex?: string;
   onChangeLatexChange?: (value: string) => void;
+  className?: string;
 }
 
 const MathKeyboard = forwardRef<HTMLDivElement, MathKeyboardProps>(
   (
-    { initialLatex, editable = true, onChangeLatexChange }: MathKeyboardProps,
+    {
+      initialLatex,
+      editable = true,
+      onChangeLatexChange,
+      className,
+    }: MathKeyboardProps,
     ref
   ) => {
     const firstMathfieldRef = useRef<any>();
@@ -49,7 +55,9 @@ const MathKeyboard = forwardRef<HTMLDivElement, MathKeyboardProps>(
         ref={ref}
         className={twMerge(
           'flex w-full flex-col gap-2',
-          !editable && 'pointer-events-none'
+          !editable && 'pointer-events-none',
+          'border rounded-[10px]',
+          className ? className : ''
         )}
       >
         <MathInput

@@ -1,4 +1,5 @@
 import { Checkbox } from '@/libs/core/ui/src/ui/checkbox';
+import MathKeyboard from '@/libs/formulas/ui/src/math-keyboard';
 import { Category } from '@/libs/formulas/utils/types';
 import { ColumnDef } from '@tanstack/react-table';
 
@@ -39,7 +40,15 @@ export const categoryColumns: ColumnDef<Category>[] = [
     header: () => <div className="text-right">Формула</div>,
     cell: ({ row }) => {
       return (
-        <div className="text-right font-medium">{row.getValue('latex')}</div>
+        <div className="flex justify-end">
+          <div className="p-3 rounded-[10px] overflow-auto">
+            <MathKeyboard
+              className="border-none"
+              initialLatex={row.getValue('latex')}
+              editable={false}
+            />
+          </div>
+        </div>
       );
     },
   },

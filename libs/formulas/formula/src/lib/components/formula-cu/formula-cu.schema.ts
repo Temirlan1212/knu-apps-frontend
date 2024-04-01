@@ -4,9 +4,9 @@ enum MinMax {
   titlelMin = 1,
   titlelMax = 100,
   latexMin = 1,
-  latexMax = 100,
+  latexMax = 1000,
   descriptionMin = 0,
-  descriptionMax = 100,
+  descriptionMax = 2000,
 }
 
 export const formulaCuSchema = z.object({

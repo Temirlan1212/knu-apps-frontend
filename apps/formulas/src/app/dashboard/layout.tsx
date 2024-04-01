@@ -1,5 +1,5 @@
 import { NavigationBar } from '@/libs/formulas/layouts/src';
-import AdminGuard from '@/libs/formulas/auth/data-access/src/lib/services/admin.guard';
+import { AdminRedirectGuard } from '@/libs/formulas/auth/data-access/src/lib/services/admin-redirect.guard';
 
 export default async function Layout({
   children,
@@ -7,10 +7,10 @@ export default async function Layout({
   children: React.ReactNode;
 }) {
   return (
-    <AdminGuard>
+    <AdminRedirectGuard>
       <div className="container py-3">
         <NavigationBar>{children}</NavigationBar>
       </div>
-    </AdminGuard>
+    </AdminRedirectGuard>
   );
 }
