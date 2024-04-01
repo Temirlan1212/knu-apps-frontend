@@ -1,6 +1,5 @@
 export type ServerTimestampt = { createdAt: string; updatedAt: string };
 export type IRoles = 'CLIENT' | 'ADMIN';
-export type PrimitiveJsTypes = string | number | boolean | bigint | symbol;
 
 export interface User {
   username: string;

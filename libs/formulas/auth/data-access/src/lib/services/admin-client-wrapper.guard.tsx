@@ -7,5 +7,5 @@ export function AdminClientWrapperGuard({ children }: PropsWithChildren) {
   if (data?.role !== 'ADMIN' || status === 'unauthenticated') {
     return null;
   }
-  return children;
+  return <>{children}</>;
 }

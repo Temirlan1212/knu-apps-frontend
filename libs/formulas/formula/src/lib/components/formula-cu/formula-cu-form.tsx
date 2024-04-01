@@ -31,7 +31,7 @@ import {
 import { ApiResponse } from '@/http';
 import MathKeyboard from '@/libs/formulas/ui/src/math-keyboard';
 import { CategoryListFormWithDialog } from '@/libs/formulas/category/src';
-import { primitiveArrToObjValueAsKey } from '@/libs/formulas/utils/helpers';
+import { primitiveArrToObjBooleanValueAsKey } from '@/libs/formulas/utils/helpers';
 
 const variantTextContentSchema = {
   title: { update: 'Редактировать', create: 'Создать' },
@@ -69,7 +69,7 @@ export function FormulaCuForm({}: FormulaCuFormProps) {
     },
     values: {
       ...formulaValueState,
-      categories: primitiveArrToObjValueAsKey(
+      categories: primitiveArrToObjBooleanValueAsKey(
         formulaValueState.categoryIds,
         true
       ),
