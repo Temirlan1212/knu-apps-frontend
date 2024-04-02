@@ -13,10 +13,13 @@ import { SimplePagination } from '@/ui/simple-pagintation';
 import { categoryColumns } from './formula-data-table.data';
 import { ActionCell } from './formula-data-table-actions';
 import { FormulaCuForm } from './formula-cu/formula-cu-form';
-import { AdminClientWrapperGuard } from '@/libs/formulas/auth/data-access/src';
+import { IRoles } from '@/libs/formulas/utils/types';
 
-export interface FormulaListProps {}
-export function FormulaList({}: FormulaListProps) {
+export interface FormulaListProps {
+  variant: IRoles;
+}
+
+export function FormulaList({ variant }: FormulaListProps) {
   const {
     fetchFormula,
     nextPage,
@@ -50,15 +53,14 @@ export function FormulaList({}: FormulaListProps) {
             {
               id: 'actions',
               enableHiding: true,
-              cell: ({ row }) => (
-                <AdminClientWrapperGuard>
+              cell: ({ row }) =>
+                variant === 'ADMIN' && (
                   <ActionCell
                     row={row}
                     onDelete={deleteFormula}
                     onEdit={(original) => updateDialogInit(original)}
                   />
-                </AdminClientWrapperGuard>
-              ),
+                ),
             },
           ]}
           slots={{
@@ -95,9 +97,9 @@ export function FormulaList({}: FormulaListProps) {
             ),
             headerRightBlock: (table) => (
               <>
-                <AdminClientWrapperGuard>
+                {variant === 'ADMIN' && (
                   <AddAction onClick={createDialogInit} />
-                </AdminClientWrapperGuard>
+                )}
                 <RowConrolMenu table={table} />
               </>
             ),
