@@ -1,118 +1,49 @@
 'use client';
+import { EditorProps } from '@/libs/formulas/ui/src/blocknote-view/blocknote-view';
+import { blogController } from './data-access';
+import { BlogBlocknoteView } from './components/blog-blocknote-view';
+import { MoveLeft } from 'lucide-react';
 import { Button } from '@/ui/button';
-import { BlockNoteView } from '@/libs/formulas/ui/src/blocknote-view';
+import Link from 'next/link';
 import { useState } from 'react';
-import { BlockNoteEditorViewOptions } from '@/libs/formulas/ui/src/blocknote-view/blocknote-view';
 
 /* eslint-disable-next-line */
-export interface BlogProps {}
+export interface BlogPageProps {}
 
-export function Blog(props: BlogProps) {
-  const [content, setContent] = useState<
-    BlockNoteEditorViewOptions['initialContent']
-  >([
-    {
-      id: 'a0b61a28-baac-4562-be0f-fe64eed0a553',
-      type: 'heading',
-      props: {
-        textColor: 'default',
-        backgroundColor: 'default',
-        textAlignment: 'left',
-        level: 1,
-      },
-      content: [
-        {
-          type: 'text',
-          text: 'Заголовок',
-          styles: {},
-        },
-      ],
-      children: [],
-    },
-    {
-      id: '1a43fe78-1911-430d-aafb-9980cfd7b87d',
-      type: 'heading',
-      props: {
-        textColor: 'default',
-        backgroundColor: 'default',
-        textAlignment: 'left',
-        level: 3,
-      },
-      content: [
-        {
-          type: 'text',
-          text: 'Описание',
-          styles: {},
-        },
-      ],
-      children: [],
-    },
-    {
-      id: 'c1a96577-4e6d-453d-8919-3b5c9c56b805',
-      type: 'paragraph',
-      props: {
-        textColor: 'default',
-        backgroundColor: 'default',
-        textAlignment: 'left',
-      },
-      content: [
-        {
-          type: 'text',
-          text: 'Любой текст Любой текст Любой текст Любой текст Любой текст Любой текст Любой текст Любой текст Любой текст Любой текст  ',
-          styles: {},
-        },
-      ],
-      children: [],
-    },
-    {
-      id: '010e32da-04b0-48ce-87c8-ec510b9dfd5a',
-      type: 'paragraph',
-      props: {
-        textColor: 'default',
-        backgroundColor: 'default',
-        textAlignment: 'left',
-      },
-      content: [],
-      children: [],
-    },
-    {
-      id: 'a5ea7dd6-3bb6-42c3-8b83-379a0dd0a7ba',
-      type: 'paragraph',
-      props: {
-        textColor: 'default',
-        backgroundColor: 'default',
-        textAlignment: 'left',
-      },
-      content: [],
-      children: [],
-    },
-    {
-      id: 'f08a86bb-6dd5-4221-8fb9-091ff18a81ef',
-      type: 'paragraph',
-      props: {
-        textColor: 'default',
-        backgroundColor: 'default',
-        textAlignment: 'left',
-      },
-      content: [],
-      children: [],
-    },
-  ]);
+type BlogUpdateStatusText = 'Сохранено' | 'Ошибка' | 'Нету изменений';
+
+export function BlogPage(props: BlogPageProps) {
+  const [loading, setLoading] = useState(false);
+  const [statusText, setStatusText] =
+    useState<BlogUpdateStatusText>('Нету изменений');
+  const debounceChangeHandler = async (document: EditorProps['document']) => {
+    setLoading(true);
+    const res = await blogController.update('660c11d129aa6436cf344496', {
+      document,
+      title: '',
+      coverImgUrl: '',
+    });
+    if (res.ok) setStatusText('Сохранено');
+    else setStatusText('Ошибка');
+    setLoading(false);
+  };
 
   return (
-    <div className="my-2">
-      <div className="flex gap-2 justify-end">
-        {/* <Button variant="destructive">Отменить</Button>
-        <Button>Сохранить</Button> */}
+    <div className="py-6 relative h-full">
+      <div className="flex gap-5 flex-wrap justify-between border rounded-[20px] p-2 sticky top-0 z-[1000]">
+        <Link href="..">
+          <Button variant="ghost" className="rounded-[10px]">
+            <MoveLeft />
+          </Button>
+        </Link>
+
+        <Button variant="ghost" loading={loading} className="rounded-[10px]">
+          {statusText}
+        </Button>
       </div>
-      <BlockNoteView
-        initialContent={content}
-        onChange={(editor) => {
-          console.log(editor.document);
-        }}
-      />
+      <BlogBlocknoteView onDebounceChange={debounceChangeHandler} />
     </div>
   );
 }
 
-export default Blog;
+export default BlogPage;

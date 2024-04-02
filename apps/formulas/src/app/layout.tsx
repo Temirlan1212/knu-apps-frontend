@@ -1,6 +1,4 @@
-import { authConroller } from '@/libs/formulas/auth/data-access/src';
 import './global.css';
-import { Header } from '@/libs/formulas/layouts/src';
 import { Toaster } from '@/ui/toaster';
 import { CheckAuth } from '@/libs/formulas/auth/data-access/src';
 import NextTopLoader from 'nextjs-toploader';
@@ -19,7 +17,6 @@ export default async function RootLayout({
     <html lang="en">
       <body>
         <CheckAuth>
-          <Header />
           <NextTopLoader color="black" />
           {children}
           <Toaster />

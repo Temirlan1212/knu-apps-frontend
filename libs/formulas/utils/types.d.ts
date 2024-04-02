@@ -1,3 +1,5 @@
+import { BlockNoteEditorViewOptions } from '@/libs/formulas/ui/src/blocknote-view/blocknote-view';
+
 export type ServerTimestampt = { createdAt: string; updatedAt: string };
 export type IRoles = 'CLIENT' | 'ADMIN';
 
@@ -54,6 +56,12 @@ export type Formula = {
   categoryIds: string[];
 } & Partial<ServerTimestampt>;
 
+export type Blog = {
+  title: string;
+  id: string;
+  document: BlockNoteEditorViewOptions['initialContent'];
+} & Partial<ServerTimestampt & { coverImgUrl: string }>;
+
 export interface PaginationResponse<T> {
   data: T[];
   meta: {
@@ -72,6 +80,10 @@ export interface PaginationQuery<T extends number> {
 
 export interface CategoryPaginationQuery extends PaginationQuery<number> {
   label: string;
+}
+
+export interface BlogPaginationQuery extends PaginationQuery<number> {
+  title: string;
 }
 
 export interface FormulaPaginationQuery extends PaginationQuery<number> {
