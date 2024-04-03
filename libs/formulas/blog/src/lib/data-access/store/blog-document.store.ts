@@ -33,6 +33,7 @@ export const useBlogDocumentState = create<IBlogDocumentStateProps>(
       let payload: Partial<Blog> = {};
       if (blog?.coverImgUrl) payload.coverImgUrl = blog.coverImgUrl;
       if (blog?.title) payload.title = blog.title;
+      if (blog?.description) payload.description = blog.description;
 
       const res = await blogController.update(blogId, payload);
 
