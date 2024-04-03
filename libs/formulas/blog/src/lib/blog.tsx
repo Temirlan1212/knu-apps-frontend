@@ -52,8 +52,9 @@ export function BlogPage(props: BlogPageProps) {
         </AdminClientWrapperGuard>
         <BlogCoverImage onSelect={handleImageSelect} />
       </div>
-
-      <BlogBlocknoteView onDebounceChange={handleDebounceChangeHandler} />
+      <div className="mt-[40px]">
+        <BlogBlocknoteView onDebounceChange={handleDebounceChangeHandler} />
+      </div>
     </div>
   );
 }

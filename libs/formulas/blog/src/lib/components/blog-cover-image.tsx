@@ -8,7 +8,7 @@ import { useState } from 'react';
 
 export function BlogCoverImage(props: UnsplashListProps) {
   const [url, setUrl] = useState(
-    'https://source.unsplash.com/random/1200×250?theme,math,physics,backround'
+    'https://source.unsplash.com/random?theme,math,physics,backround'
   );
   return (
     <div className="relative">
@@ -19,7 +19,7 @@ export function BlogCoverImage(props: UnsplashListProps) {
         width={100}
         height={100}
         objectFit="cover"
-        className="w-full h-[350px] object-cover rounded-[10px]"
+        className="w-full h-[400px] object-cover rounded-[10px]"
         placeholder="blur"
         unoptimized
       />

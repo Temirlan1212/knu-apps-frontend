@@ -6,7 +6,13 @@ import {
 } from '@/libs/formulas/ui/src/blocknote-view/blocknote-view';
 import { useState } from 'react';
 
-const initTitleBlock = (text: string): EditorProps['document'] => {
+const initBlock = ({
+  title,
+  descr,
+}: Partial<{
+  title: string;
+  descr: string;
+}>): EditorProps['document'] => {
   return [
     {
       id: 'dd7a9ebb-b492-4a19-95f0-e6a75dbf6efa',
@@ -20,7 +26,7 @@ const initTitleBlock = (text: string): EditorProps['document'] => {
       content: [
         {
           type: 'text',
-          text: text,
+          text: title || '',
           styles: {},
         },
       ],
@@ -28,27 +34,17 @@ const initTitleBlock = (text: string): EditorProps['document'] => {
     },
     {
       id: '92c5bf39-0479-4236-ae56-1b44c41c3cec',
-      type: 'paragraph',
+      type: 'heading',
       props: {
         textColor: 'default',
         backgroundColor: 'default',
         textAlignment: 'left',
-      },
-      content: [],
-      children: [],
-    },
-    {
-      id: '92c5bf39-0479-4236-ae56-1b44c41c3cec',
-      type: 'paragraph',
-      props: {
-        textColor: 'default',
-        backgroundColor: 'default',
-        textAlignment: 'left',
+        level: 3,
       },
       content: [
         {
           type: 'text',
-          text: 'Описание',
+          text: descr || '',
           styles: {},
         },
       ],
@@ -69,7 +65,9 @@ export const BlogBlocknoteView = ({
       {...rest}
       formattingToolbar={true}
       linkToolbar={false}
-      initialContent={initialContent || initTitleBlock('Заголовок')}
+      initialContent={
+        initialContent || initBlock({ descr: 'Заголовок', title: 'Описание' })
+      }
       slotProps={{
         formattingToolbar: {
           blockTypeSelect: formattingToolbar,
@@ -80,16 +78,22 @@ export const BlogBlocknoteView = ({
       }}
       onInit={(editor) => {
         editor.formattingToolbar.onUpdate(() => {
+          setFormattingToolbar(true);
+
           const selectedBlock = editor.getSelection()?.blocks[0];
-          if (selectedBlock?.id == initTitleBlock('')[0].id)
+          if (selectedBlock?.id == initBlock({})[0].id)
             setFormattingToolbar(false);
-          else setFormattingToolbar(true);
+          if (selectedBlock?.id == initBlock({})[1].id)
+            setFormattingToolbar(false);
         });
         editor.onChange(() => {
           const titleBlock = editor.document[0];
-          const level = (titleBlock.props as any)?.level;
-          if (level !== 1) {
-            editor.updateBlock({ id: titleBlock.id }, initTitleBlock('')[0]);
+          if ((titleBlock.props as any)?.level !== 1) {
+            editor.updateBlock({ id: titleBlock.id }, initBlock({})[0]);
+          }
+          const descrBlock = editor.document[1];
+          if ((descrBlock.props as any)?.level !== 3) {
+            editor.updateBlock({ id: descrBlock.id }, initBlock({})[1]);
           }
         });
         onInit && onInit(editor);
