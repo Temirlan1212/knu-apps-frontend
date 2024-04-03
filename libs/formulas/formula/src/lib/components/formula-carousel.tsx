@@ -22,12 +22,12 @@ export function FormulaCarousel() {
   }, []);
 
   return (
-    <div className="px-[40px]">
+    <div>
       <Carousel
         opts={{
           align: 'start',
         }}
-        className="w-full"
+        className="w-full min-h-[220px]"
       >
         <CarouselContent>
           {loading &&
@@ -56,8 +56,8 @@ export function FormulaCarousel() {
               </CarouselItem>
             ))}
         </CarouselContent>
-        <CarouselPrevious />
-        <CarouselNext />
+        {/* <CarouselPrevious />
+        <CarouselNext /> */}
       </Carousel>
     </div>
   );

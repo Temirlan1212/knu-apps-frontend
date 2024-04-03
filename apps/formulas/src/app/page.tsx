@@ -1,4 +1,5 @@
 import { FormulaCarousel } from '@./formula';
+import { BlogCarousel } from '@/libs/formulas/blog/src';
 import { Header } from '@/libs/formulas/layouts/src';
 import { SectionBuilderWrapper } from '@/libs/formulas/ui/src/section-builder-wrapper';
 import { Button } from '@/ui/button';
@@ -14,7 +15,20 @@ export default async function Index() {
   return (
     <>
       <Header />
-      <div className="container py-5">
+      <div className="container py-5 flex flex-col gap-[30px]">
+        <SectionBuilderWrapper
+          title="Темы"
+          slots={{
+            titleRightBlock: (
+              <Link href="/blog">
+                <Button variant="ghost">Все</Button>
+              </Link>
+            ),
+          }}
+        >
+          <BlogCarousel />
+        </SectionBuilderWrapper>
+
         <SectionBuilderWrapper
           title="Формулы"
           slots={{
@@ -27,13 +41,6 @@ export default async function Index() {
         >
           <FormulaCarousel />
         </SectionBuilderWrapper>
-
-        <SectionBuilderWrapper
-          title="Темы"
-          slots={{
-            titleRightBlock: <Button variant="ghost">Создать</Button>,
-          }}
-        />
       </div>
     </>
   );
