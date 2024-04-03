@@ -35,20 +35,23 @@ interface IBlogStateProps {
       | ((state: IBlogStateProps) => IBlogStateProps | Partial<any>),
     replace?: boolean | undefined
   ) => void;
+  resetQuery: () => void;
 }
 
 const PER_PAGE = 10;
+
+const INITIAL_QUERY = {
+  title: '',
+  perPage: PER_PAGE,
+  page: 0,
+};
 
 export const useBlogState = create<IBlogStateProps>((set, get) => ({
   selectedBlogsInIds: {},
   blogs: [],
   loading: false,
   title: '',
-  query: {
-    title: '',
-    perPage: PER_PAGE,
-    page: 0,
-  },
+  query: INITIAL_QUERY,
   paginationMeta: {
     total: 0,
     lastPage: 0,
@@ -58,6 +61,7 @@ export const useBlogState = create<IBlogStateProps>((set, get) => ({
     next: null,
   },
   set: (partial, replace) => set(partial, replace),
+  resetQuery: () => set({ query: INITIAL_QUERY }),
   updatePaginationMeta: (key, value) => {
     if (!value) return;
     set({ paginationMeta: { ...get().paginationMeta, [key]: value } });
@@ -66,6 +70,8 @@ export const useBlogState = create<IBlogStateProps>((set, get) => ({
     set({ query: { ...get().query, [key]: value } });
   },
   fetchBlogs: async ({ page, title, perPage }) => {
+    if (page === get().query.page) return;
+
     set({ loading: true });
     if (page) get().updateQuery('page', page);
     if (perPage) get().updateQuery('perPage', perPage);
@@ -78,7 +84,7 @@ export const useBlogState = create<IBlogStateProps>((set, get) => ({
     });
 
     if (res.ok) {
-      set({ blogs: res.result.data });
+      set({ blogs: [...get().blogs, ...res.result.data] });
       set({ paginationMeta: res.result.meta });
     }
     set({ loading: false });

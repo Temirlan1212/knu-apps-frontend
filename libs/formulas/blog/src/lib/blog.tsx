@@ -5,7 +5,7 @@ import { BlogBlocknoteView } from './components/blog-blocknote-view';
 import { MoveLeft } from 'lucide-react';
 import { Button } from '@/ui/button';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { BlogCoverImage } from './components/blog-cover-image';
 import { Blog } from '@/libs/formulas/utils/types';
 import { UnsplashImage } from '@/libs/formulas/unsplash/src/lib/data-access/services/services';
@@ -14,6 +14,9 @@ import { AdminClientWrapperGuard } from '@/libs/formulas/auth/data-access/src';
 export interface BlogPageProps {}
 
 type BlogUpdateStatusText = 'Сохранено' | 'Ошибка' | 'Нету изменений';
+
+const defaultImageUrl =
+  'https://images.unsplash.com/photo-1705518072779-eaf101a185a4?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8JUQwJUI2JUQwJUI1JUQwJUJCJUQxJTgyJUQxJThCJUQwJUI5fGVufDB8fDB8fHww';
 
 export function BlogPage(props: BlogPageProps) {
   const [loading, setLoading] = useState(false);
@@ -68,7 +71,10 @@ export function BlogPage(props: BlogPageProps) {
         <AdminClientWrapperGuard>
           <InfoBar statusText={statusText} loading={loading} />
         </AdminClientWrapperGuard>
-        <BlogCoverImage onSelect={handleImageSelect} />
+        <BlogCoverImage
+          onSelect={handleImageSelect}
+          defaultImageUrl={defaultImageUrl}
+        />
       </div>
       <div className="mt-[40px]">
         <BlogBlocknoteView onDebounceChange={handleDebounceChangeHandler} />

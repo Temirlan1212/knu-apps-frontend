@@ -1,5 +1,4 @@
 import { BlogPage } from '@/libs/formulas/blog/src';
-import { Header } from '@/libs/formulas/layouts/src';
 
 export default async function BlogSlugPage() {
   /*
@@ -9,11 +8,8 @@ export default async function BlogSlugPage() {
    */
 
   return (
-    <>
-      <Header />
-      <div className="container">
-        <BlogPage />
-      </div>
-    </>
+    <div className="container">
+      <BlogPage />
+    </div>
   );
 }

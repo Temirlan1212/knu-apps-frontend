@@ -6,10 +6,10 @@ import {
 } from '@/libs/formulas/unsplash/src';
 import { useState } from 'react';
 
-export function BlogCoverImage(props: UnsplashListProps) {
-  const [url, setUrl] = useState(
-    'https://source.unsplash.com/random?theme,math,physics,backround'
-  );
+export function BlogCoverImage(
+  props: UnsplashListProps & { defaultImageUrl: string }
+) {
+  const [url, setUrl] = useState(props.defaultImageUrl);
   return (
     <div className="relative">
       <Image

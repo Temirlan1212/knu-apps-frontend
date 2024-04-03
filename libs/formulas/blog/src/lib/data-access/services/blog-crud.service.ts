@@ -1,7 +1,7 @@
 import { apifetch } from '@/libs/core/http/src';
 import {
   Blog,
-  PaginationQuery,
+  BlogPaginationQuery,
   PaginationResponse,
 } from '@/libs/formulas/utils/types';
 
@@ -11,15 +11,11 @@ const headers = {
 
 export const blogCrudService = () => {
   return {
-    async findAll({
-      perPage = 10,
-      page = 1,
-      label,
-    }: PaginationQuery<number> & { label?: string }) {
+    async findAll({ perPage = 10, page = 1, title }: BlogPaginationQuery) {
       const params = new URLSearchParams();
       perPage && params.append('perPage', String(perPage));
       page && params.append('page', String(page));
-      label && params.append('label', String(label));
+      title && params.append('title', String(title));
 
       return await apifetch<PaginationResponse<Blog>>(
         'blog?' + String(params),
