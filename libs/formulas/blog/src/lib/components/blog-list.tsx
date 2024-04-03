@@ -7,7 +7,6 @@ import { Button } from '@/libs/core/ui/src/ui/button';
 import { DebounceSearch } from '@/libs/core/ui/src/ui/data-table/debounce-search';
 import { useRouter } from 'next/navigation';
 import { Plus } from 'lucide-react';
-import { AdminClientWrapperGuard } from '@/libs/formulas/auth/data-access/src';
 import { twMerge } from 'tailwind-merge';
 
 export interface BlogListProps {}
@@ -48,15 +47,13 @@ export function BlogList({}: BlogListProps) {
           />
         </div>
 
-        <AdminClientWrapperGuard>
-          <Button
-            variant="outline"
-            className="p-[5px] h-[fit-content]"
-            onClick={() => createBlog()}
-          >
-            <Plus className="h-[20px]" />
-          </Button>
-        </AdminClientWrapperGuard>
+        <Button
+          variant="outline"
+          className="p-[5px] h-[fit-content]"
+          onClick={() => createBlog()}
+        >
+          <Plus className="h-[20px]" />
+        </Button>
       </div>
 
       <InfiniteScroll
