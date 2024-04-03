@@ -69,6 +69,7 @@ export function UnsplashList({ onSelect, props }: UnsplashListProps) {
     <div className="p-5 relative flex flex-col gap-2">
       <DebounceSearch
         loading={loading === 'search'}
+        placeholder="Поиск"
         onDebounceChange={(text) => {
           const new_query = { ...query, searchValue: text };
           searchImage(new_query, 'search');

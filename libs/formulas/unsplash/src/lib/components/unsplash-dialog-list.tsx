@@ -4,7 +4,16 @@ import {
   UnsplashListProps,
   useUnsplashState,
 } from '@/libs/formulas/unsplash/src';
-import { Dialog, DialogContent, DialogTrigger } from '@/ui/dialog';
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetDescription,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from '@/ui/sheet';
 import { useEffect, useState } from 'react';
 import { AdminClientWrapperGuard } from '@/libs/formulas/auth/data-access/src';
 
@@ -17,14 +26,14 @@ export function UnsplashDialogList(props: UnsplashListProps) {
 
   return (
     <div>
-      <Dialog open={open} onOpenChange={setOpen}>
+      <Sheet open={open} onOpenChange={setOpen}>
         <AdminClientWrapperGuard>
-          <DialogTrigger className="w-[fit-content] bg-accent/70 hover:bg-accent px-4 py-2 !rounded-[10px] absolute top-3 right-3">
+          <SheetTrigger className="w-[fit-content] bg-accent/70 hover:bg-accent px-4 py-2 !rounded-[10px] absolute top-3 right-3">
             Поменять
-          </DialogTrigger>
+          </SheetTrigger>
         </AdminClientWrapperGuard>
 
-        <DialogContent>
+        <SheetContent className="sm:!w-[75%] !w-full !max-w-full sm:max-w-full px-0">
           <UnsplashList
             {...props}
             onSelect={(imageData) => {
@@ -33,16 +42,16 @@ export function UnsplashDialogList(props: UnsplashListProps) {
             }}
             props={{
               imageProps: {
-                height: '100px',
-                width: '100px',
+                height: '300px',
+                width: '320px',
               },
               wrapperProps: {
-                className: 'overlow-scroll max-h-[200px]',
+                className: 'overlow-scroll max-h-[600px]',
               },
             }}
           />
-        </DialogContent>
-      </Dialog>
+        </SheetContent>
+      </Sheet>
     </div>
   );
 }
