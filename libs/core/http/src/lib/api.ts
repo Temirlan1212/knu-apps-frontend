@@ -12,13 +12,14 @@ export type ApiResponse<T> = {
 
 export async function apifetch<T>(
   input: RequestInfo | URL,
-  init?: RequestInit
+  init?: RequestInit,
+  api_url?: string
 ): Promise<ApiResponse<T>> {
   if (!API_URL) throw new Error('Provide API_URL');
   let response: ApiResponse<T> | null = null;
 
   try {
-    const res = await fetch(API_URL + '/' + input, {
+    const res = await fetch(api_url || API_URL + '/' + input, {
       ...init,
       headers: {
         ...(init?.headers || {}),

@@ -57,7 +57,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
             {typeof props.children === typeof '' &&
               props.children
                 ?.toString()
-                .slice(0, props.children?.toLocaleString().length - 4) + '...'}
+                .slice(0, props.children?.toLocaleString().length - 3) + '..'}
 
             <Loader2 className="h-4 w-4 animate-spin" />
           </div>

@@ -82,6 +82,12 @@ export interface CategoryPaginationQuery extends PaginationQuery<number> {
   label: string;
 }
 
+export interface UnplashSearchQuery {
+  page: number;
+  per_page: number;
+  searchValue: string;
+}
+
 export interface BlogPaginationQuery extends PaginationQuery<number> {
   title: string;
 }

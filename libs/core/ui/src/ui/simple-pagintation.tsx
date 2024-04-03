@@ -5,9 +5,11 @@ export interface SimplePaginationProps {
   onNext: () => void;
   props?: {
     nextBtn?: {
+      loading?: boolean;
       disabled?: boolean;
     };
     prevBtn?: {
+      loading?: boolean;
       disabled?: boolean;
     };
   };
@@ -34,6 +36,7 @@ export function SimplePagination({
           size="sm"
           onClick={() => (onPrev ? onPrev() : null)}
           disabled={!!props?.prevBtn?.disabled}
+          loading={!!props?.prevBtn?.loading}
         >
           Предыдущий
         </Button>
@@ -42,6 +45,7 @@ export function SimplePagination({
           size="sm"
           onClick={() => (onNext ? onNext() : null)}
           disabled={!!props?.nextBtn?.disabled}
+          loading={!!props?.nextBtn?.loading}
         >
           Следующий
         </Button>

@@ -19,6 +19,8 @@
       "@./category/server": ["libs/formulas/category/src/server.ts"],
       "@./formula": ["libs/formulas/formula/src/index.ts"],
       "@./formula/server": ["libs/formulas/formula/src/server.ts"],
+      "@./unsplash": ["libs/formulas/unsplash/src/index.ts"],
+      "@./unsplash/server": ["libs/formulas/unsplash/src/server.ts"],
       "@/apps/*": ["apps/*"],
       "@/formulas-lib/*": ["libs/formulas/core/ui/src/*"],
       "@/http": ["libs/core/http/src/index.ts"],
