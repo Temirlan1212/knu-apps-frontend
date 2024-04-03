@@ -60,7 +60,14 @@ export type Blog = {
   title: string;
   id: string;
   document: BlockNoteEditorViewOptions['initialContent'];
+  blocknoteDocumentId: string;
+  description: string;
 } & Partial<ServerTimestampt & { coverImgUrl: string }>;
+
+export type BlocknoteDocument = {
+  id: string;
+  document: BlockNoteEditorViewOptions['initialContent'] | string;
+} & Partial<ServerTimestampt>;
 
 export interface PaginationResponse<T> {
   data: T[];

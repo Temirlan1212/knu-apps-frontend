@@ -38,10 +38,11 @@ export const blogCrudService = () => {
       });
     },
     async update(id: Blog['id'], payload: Partial<Blog>) {
-      return await apifetch<{ id: Blog['id'] }>('blog' + '/' + id, {
+      return await apifetch<Blog>('blog' + '/' + id, {
         method: 'PATCH',
         body: JSON.stringify(payload),
         headers,
+        cache: 'no-cache',
       });
     },
     async delete(id: Blog['id']) {

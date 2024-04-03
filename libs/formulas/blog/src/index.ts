@@ -2,3 +2,4 @@
 
 export * from './lib/blog';
 export * from './lib/components/blog-cover-image';
+export * from './lib/data-access';

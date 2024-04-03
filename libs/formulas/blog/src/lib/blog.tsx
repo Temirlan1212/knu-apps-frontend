@@ -1,6 +1,6 @@
 'use client';
 import { EditorProps } from '@/libs/formulas/ui/src/blocknote-view/blocknote-view';
-import { blogController } from './data-access';
+import { blocknoteDocumentController, blogController } from './data-access';
 import { BlogBlocknoteView } from './components/blog-blocknote-view';
 import { MoveLeft } from 'lucide-react';
 import { Button } from '@/ui/button';
@@ -23,24 +23,42 @@ export function BlogPage(props: BlogPageProps) {
   const handleDebounceChangeHandler = async (
     document: EditorProps['document']
   ) => {
-    updateBlog({ document });
+    const title = (document[0] as any).content[0]?.text || '';
+    const description = (document[1] as any).content[0]?.tex || '';
+    updateBlog({
+      document,
+      title,
+      description,
+      id: '660d25ca43d2d72c772b702e',
+    });
   };
 
   const handleImageSelect = async (imageData: UnsplashImage) => {
-    updateBlog({ coverImgUrl: imageData.urls.full });
+    updateBlog({
+      coverImgUrl: imageData.urls.full,
+      id: '660d25ca43d2d72c772b702e',
+    });
   };
 
-  const updateBlog = async (blog: Partial<Blog>) => {
+  const updateBlog = async (blog: Partial<Blog> & { id: string }) => {
     setLoading(true);
-    let payload: typeof blog = {};
+
+    let payload: Partial<Blog> = {};
     if (blog?.coverImgUrl) payload.coverImgUrl = blog.coverImgUrl;
-    if (blog?.document) payload.document = blog.document;
-    const res = await blogController.update(
-      '660c11d129aa6436cf344496',
-      payload
-    );
-    if (res.ok) setStatusText('Сохранено');
-    else setStatusText('Ошибка');
+    if (blog?.title) payload.title = blog.title;
+
+    const res = await blogController.update(blog.id, payload);
+
+    const id = res?.result?.blocknoteDocumentId;
+
+    if (res.ok && id) {
+      const res = await blocknoteDocumentController.update(id, {
+        document: blog.document,
+      });
+      if (res.ok) setStatusText('Сохранено');
+      else setStatusText('Ошибка');
+    }
+
     setLoading(false);
   };
 
