@@ -85,9 +85,12 @@ export const useBlogState = create<IBlogStateProps>((set, get) => ({
     });
 
     if (res.ok) {
-      set({ blogs: { [String(get().query.page)]: res.result.data } });
+      set({
+        blogs: { ...get().blogs, [String(get().query.page)]: res.result.data },
+      });
       set({ paginationMeta: res.result.meta });
     }
+
     set({ loading: false });
   },
   nextPage: async () => {
