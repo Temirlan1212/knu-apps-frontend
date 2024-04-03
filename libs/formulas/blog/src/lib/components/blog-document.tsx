@@ -4,7 +4,10 @@ import { useBlogDocumentState } from '../data-access';
 import { BlogBlocknoteView, initBlock } from './blog-blocknote-view';
 import { BlogCoverImage } from './blog-cover-image';
 import { UnsplashImage } from '@/libs/formulas/unsplash/src/lib/data-access/services/services';
-import { AdminClientWrapperGuard } from '@/libs/formulas/auth/data-access/src';
+import {
+  AdminClientWrapperGuard,
+  authConroller,
+} from '@/libs/formulas/auth/data-access/src';
 import { BlogDocumentInfoBar } from './blog-document-info-bar';
 import { useEffect } from 'react';
 import { Skeleton } from '@/libs/core/ui/src/ui/skeleton';
@@ -19,6 +22,7 @@ const defaultImageUrl =
   'https://images.unsplash.com/photo-1705518072779-eaf101a185a4?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8JUQwJUI2JUQwJUI1JUQwJUJCJUQxJTgyJUQxJThCJUQwJUI5fGVufDB8fDB8fHww';
 
 export function BlogDocument(props: BlogDocumentProps) {
+  const { data } = authConroller.getClientSession();
   const {
     loading,
     updateStatus,
@@ -75,6 +79,7 @@ export function BlogDocument(props: BlogDocumentProps) {
       <div className="mt-[40px]">
         {documentLoading === 'unloading' ? (
           <BlogBlocknoteView
+            editable={data?.role === 'ADMIN'}
             initialContent={
               (Array.isArray(document) && document.length > 0 && document) ||
               initBlock({ descr: 'Заголовок', title: 'Описание' })
