@@ -1,4 +1,4 @@
-// import { Blog } from '@/libs/formulas/blog/src';
+import { BlogList } from '@/libs/formulas/blog/src';
 
 export default function BlogPage() {
   /*
@@ -6,5 +6,9 @@ export default function BlogPage() {
    *
    * Note: The corresponding styles are in the ./index.css file.
    */
-  return <div className="container">{/* <Blog /> */}</div>;
+  return (
+    <div className="container">
+      <BlogList />
+    </div>
+  );
 }
