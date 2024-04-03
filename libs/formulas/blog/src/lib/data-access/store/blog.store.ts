@@ -4,14 +4,14 @@ import {
   PaginationResponse,
 } from '@/libs/formulas/utils/types';
 import { create } from 'zustand';
-import { blogController } from '..';
+import { blocknoteDocumentController, blogController } from '..';
 import { ValueOf } from 'next/dist/shared/lib/constants';
 import { RowSelectionState } from '@tanstack/react-table';
 
 interface IBlogStateProps {
   selectedBlogsInIds: RowSelectionState;
   selectedBlog: Blog | null;
-  blogs: Blog[];
+  blogs: Record<string, Blog[]>;
   loading: boolean;
   paginationMeta: PaginationResponse<Blog[]>['meta'];
   title: string;
@@ -37,6 +37,7 @@ interface IBlogStateProps {
     replace?: boolean | undefined
   ) => void;
   resetQuery: () => void;
+  createBlog: (blog?: Partial<Blog>) => void;
 }
 
 const PER_PAGE = 10;
@@ -50,7 +51,7 @@ const INITIAL_QUERY = {
 export const useBlogState = create<IBlogStateProps>((set, get) => ({
   selectedBlogsInIds: {},
   selectedBlog: null,
-  blogs: [],
+  blogs: {},
   loading: false,
   title: '',
   query: INITIAL_QUERY,
@@ -72,21 +73,19 @@ export const useBlogState = create<IBlogStateProps>((set, get) => ({
     set({ query: { ...get().query, [key]: value } });
   },
   fetchBlogs: async ({ page, title, perPage }) => {
-    if (page === get().query.page) return;
-
     set({ loading: true });
     if (page) get().updateQuery('page', page);
     if (perPage) get().updateQuery('perPage', perPage);
     get().updateQuery('title', title ? title : '');
 
     const res = await blogController.findAll({
-      page: get().query.page,
+      page: get().query.page || 1,
       perPage: get().query.perPage,
       title: get().query.title,
     });
 
     if (res.ok) {
-      set({ blogs: [...get().blogs, ...res.result.data] });
+      set({ blogs: { [String(get().query.page)]: res.result.data } });
       set({ paginationMeta: res.result.meta });
     }
     set({ loading: false });
@@ -111,6 +110,27 @@ export const useBlogState = create<IBlogStateProps>((set, get) => ({
     const res = await blogController.delete(id);
     if (res.ok) get().onDeleteSuccess();
     return res;
+  },
+  createBlog: async (blog) => {
+    set({ loading: true });
+    const res = await blocknoteDocumentController.create({ document: '[]' });
+    const id = res?.result?.id;
+
+    if (res.ok && id) {
+      let payload: typeof blog = {
+        coverImgUrl:
+          'https://images.unsplash.com/photo-1569982175971-d92b01cf8694?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8b25lJTIwY29sb3J8ZW58MHx8MHx8fDA%3D',
+      };
+      if (blog?.coverImgUrl) payload.coverImgUrl = blog.coverImgUrl;
+      const res = await blogController.create({
+        ...payload,
+        blocknoteDocumentId: id,
+      });
+      if (res.ok) {
+        get().fetchBlogs({ ...get().query, page: 0 });
+      }
+    }
+    set({ loading: false });
   },
 }));
 

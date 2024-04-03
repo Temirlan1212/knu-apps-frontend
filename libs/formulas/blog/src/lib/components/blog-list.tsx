@@ -1,14 +1,16 @@
 'use client';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { BlogCard } from './blog-card';
 import { useBlogState } from '../data-access';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { Button } from '@/libs/core/ui/src/ui/button';
 import { DebounceSearch } from '@/libs/core/ui/src/ui/data-table/debounce-search';
 import { useRouter } from 'next/navigation';
+import { Plus } from 'lucide-react';
 
 export interface BlogListProps {}
 export function BlogList({}: BlogListProps) {
+  const [mounted, setMounted] = useState(false);
   const router = useRouter();
   const {
     blogs,
@@ -17,25 +19,42 @@ export function BlogList({}: BlogListProps) {
     resetQuery,
     query,
     nextPage,
+    createBlog,
     loading,
     paginationMeta,
   } = useBlogState();
 
   useEffect(() => {
-    fetchBlogs({ page: 1 });
-  }, []);
+    setMounted(true);
+    if (!!mounted) {
+      fetchBlogs({ page: 1 });
+    }
+  }, [mounted]);
 
   return (
     <div className="py-5 flex flex-col gap-5">
-      <DebounceSearch
-        loading={loading}
-        placeholder="Поиск темы"
-        onDebounceChange={(text) => {
-          set({ blogs: [] });
-          resetQuery();
-          fetchBlogs({ ...query, title: text, page: 1 });
-        }}
-      />
+      <div className="flex w-full gap-2 justify-between">
+        <div className="h-full w-[400px]">
+          <DebounceSearch
+            loading={loading}
+            placeholder="Поиск темы"
+            onDebounceChange={(text) => {
+              set({ blogs: {} });
+              resetQuery();
+              fetchBlogs({ ...query, title: text, page: 1 });
+            }}
+          />
+        </div>
+
+        <Button
+          variant="outline"
+          className="p-[5px] h-[fit-content]"
+          onClick={() => createBlog()}
+        >
+          <Plus className="h-[20px]" />
+        </Button>
+      </div>
+
       <InfiniteScroll
         dataLength={paginationMeta.total} //This is important field to render the next data
         next={nextPage}
@@ -58,23 +77,25 @@ export function BlogList({}: BlogListProps) {
             </Button>
           </div>
         )}
-        {blogs.map((item, index) => (
-          <BlogCard
-            key={index}
-            description={item.description || '_____'}
-            title={item.title || '_____'}
-            coverImgUrl={item.coverImgUrl}
-            props={{
-              button: {
-                onClick: () => {
-                  router.push(
-                    '/blog/' + item.id + '/' + item.blocknoteDocumentId
-                  );
+        {Object.values(blogs)
+          .flat(1)
+          .map((item, index) => (
+            <BlogCard
+              key={index}
+              description={item.description || '_____'}
+              title={item.title || '_____'}
+              coverImgUrl={item.coverImgUrl}
+              props={{
+                button: {
+                  onClick: () => {
+                    router.push(
+                      '/blog/' + item.id + '/' + item.blocknoteDocumentId
+                    );
+                  },
                 },
-              },
-            }}
-          />
-        ))}
+              }}
+            />
+          ))}
       </InfiniteScroll>
     </div>
   );
