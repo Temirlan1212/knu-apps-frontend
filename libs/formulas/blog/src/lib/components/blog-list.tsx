@@ -8,6 +8,7 @@ import { DebounceSearch } from '@/libs/core/ui/src/ui/data-table/debounce-search
 import { useRouter } from 'next/navigation';
 import { Plus } from 'lucide-react';
 import { AdminClientWrapperGuard } from '@/libs/formulas/auth/data-access/src';
+import { twMerge } from 'tailwind-merge';
 
 export interface BlogListProps {}
 export function BlogList({}: BlogListProps) {
@@ -89,6 +90,13 @@ export function BlogList({}: BlogListProps) {
               title={item.title || '_____'}
               coverImgUrl={item.coverImgUrl}
               props={{
+                card: {
+                  className: twMerge(
+                    paginationMeta.total > 3
+                      ? 'lg:grow lg:max-w-[50%] max-w-full'
+                      : 'lg:grow-0'
+                  ),
+                },
                 button: {
                   onClick: () => {
                     router.push(
