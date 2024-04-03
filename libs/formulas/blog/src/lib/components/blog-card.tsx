@@ -21,7 +21,7 @@ export function BlogCard({
   props,
 }: Pick<BlogCardProps, 'description' | 'title' | 'coverImgUrl' | 'props'>) {
   return (
-    <Card className="h-[340px] w-[300px] rounded-[28px] p-2 relative grow">
+    <Card className="h-[340px] w-[300px] rounded-[28px] p-2 relative grow sm:grow-0">
       <Image
         src={coverImgUrl || defaultImgUrl}
         blurDataURL={coverImgUrl || defaultImgUrl}

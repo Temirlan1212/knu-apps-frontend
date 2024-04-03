@@ -43,6 +43,7 @@ export const BlocknoteDocumentCrudService = () => {
         {
           method: 'GET',
           headers,
+          cache: 'no-cache',
         }
       );
     },

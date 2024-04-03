@@ -51,6 +51,7 @@ export const blogCrudService = () => {
       return await apifetch<Blog>('blog' + '/' + id, {
         method: 'GET',
         headers,
+        cache: 'no-cache',
       });
     },
   };

@@ -6,7 +6,7 @@ import {
 } from '@/libs/formulas/ui/src/blocknote-view/blocknote-view';
 import { useState } from 'react';
 
-const initBlock = ({
+export const initBlock = ({
   title,
   descr,
 }: Partial<{
@@ -52,7 +52,10 @@ const initBlock = ({
     },
   ];
 };
-export interface BlogBlocknoteViewProps extends BlockNoteEditorViewOptions {}
+export interface BlogBlocknoteViewProps
+  extends Omit<BlockNoteEditorViewOptions, 'initialContent'> {
+  initialContent: BlockNoteEditorViewOptions['initialContent'] | null;
+}
 
 export const BlogBlocknoteView = ({
   initialContent,
@@ -60,14 +63,13 @@ export const BlogBlocknoteView = ({
   ...rest
 }: BlogBlocknoteViewProps) => {
   const [formattingToolbar, setFormattingToolbar] = useState(true);
+  if (initialContent == null) return;
   return (
     <BlockNoteView
       {...rest}
       formattingToolbar={true}
       linkToolbar={false}
-      initialContent={
-        initialContent || initBlock({ descr: 'Заголовок', title: 'Описание' })
-      }
+      initialContent={initialContent}
       slotProps={{
         formattingToolbar: {
           blockTypeSelect: formattingToolbar,

@@ -66,7 +66,11 @@ export function BlogList({}: BlogListProps) {
             coverImgUrl={item.coverImgUrl}
             props={{
               button: {
-                onClick: () => router.push('/blog/' + item.blocknoteDocumentId),
+                onClick: () => {
+                  router.push(
+                    '/blog/' + item.id + '/' + item.blocknoteDocumentId
+                  );
+                },
               },
             }}
           />

@@ -59,7 +59,6 @@ export type Formula = {
 export type Blog = {
   title: string;
   id: string;
-  document: BlockNoteEditorViewOptions['initialContent'];
   blocknoteDocumentId: string;
   description: string;
 } & Partial<ServerTimestampt & { coverImgUrl: string }>;

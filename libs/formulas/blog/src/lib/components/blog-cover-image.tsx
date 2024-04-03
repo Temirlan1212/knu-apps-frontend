@@ -4,12 +4,17 @@ import {
   UnsplashDialogList,
   UnsplashListProps,
 } from '@/libs/formulas/unsplash/src';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export function BlogCoverImage(
   props: UnsplashListProps & { defaultImageUrl: string }
 ) {
   const [url, setUrl] = useState(props.defaultImageUrl);
+
+  useEffect(() => {
+    if (!!props.defaultImageUrl) setUrl(props.defaultImageUrl);
+  }, [props.defaultImageUrl]);
+
   return (
     <div className="relative">
       <Image

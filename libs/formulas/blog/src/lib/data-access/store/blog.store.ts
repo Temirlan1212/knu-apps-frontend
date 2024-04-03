@@ -10,6 +10,7 @@ import { RowSelectionState } from '@tanstack/react-table';
 
 interface IBlogStateProps {
   selectedBlogsInIds: RowSelectionState;
+  selectedBlog: Blog | null;
   blogs: Blog[];
   loading: boolean;
   paginationMeta: PaginationResponse<Blog[]>['meta'];
@@ -48,6 +49,7 @@ const INITIAL_QUERY = {
 
 export const useBlogState = create<IBlogStateProps>((set, get) => ({
   selectedBlogsInIds: {},
+  selectedBlog: null,
   blogs: [],
   loading: false,
   title: '',
